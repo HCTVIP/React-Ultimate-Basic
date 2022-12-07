@@ -1,6 +1,7 @@
 /* eslint-disable array-callback-return */
 import React from "react";
 import './DisplayInfor.scss'
+import logo from '../logo.svg';
 
 class DisplayInfor extends React.Component {
   state = {
@@ -14,9 +15,10 @@ class DisplayInfor extends React.Component {
   
   render() {
     const { listUsers } = this.props;
-    // pops => viet tat properties
+    // props => viet tat properties
     return (
       <div className="display-infor-container">
+        <img src={logo} className='img'/>
         <span onClick={() => {this.handleShowHide()}}>{this.state.show === true ? 'Hide' : 'Show'} list User:</span>
         {listUsers.map((user) => {
             return (
