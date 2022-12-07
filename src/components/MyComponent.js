@@ -2,6 +2,7 @@
 import React from "react";
 import AddUserInfor from "./AddUserInfor";
 import DisplayInfor from "./DisplayInfor";
+
 class MyComponent extends React.Component {
   // JSX cho phép viết code java script bên trong code của HTML
   // DRY: don't repeat yourself
