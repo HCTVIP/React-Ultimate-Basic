@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import React, { useState } from "react";
 import './DisplayInfor.scss'
-import logo from '../logo.svg';
+// import logo from '../logo.svg';
 
 
 // stateless vs statefull
