@@ -10,12 +10,12 @@ class MyComponent extends React.Component {
       {
         id: 1,
         name: "hoi dan IT",
-        age: 30,
+        age: 15,
       },
       {
         id: 2,
         name: "Eric",
-        age: 30,
+        age: 20,
       },
       {
         id: 3,
@@ -30,7 +30,7 @@ class MyComponent extends React.Component {
         <UserInfor />
         <br />
         <br />
-        <DisplayInfor listUsers={this.state.listUsers} />
+        <DisplayInfor listUsers={this.state.listUsers}/>
       </div>
     );
   }
