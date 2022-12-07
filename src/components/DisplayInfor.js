@@ -18,7 +18,7 @@ class DisplayInfor extends React.Component {
     // props => viet tat properties
     return (
       <div className="display-infor-container">
-        <img src={logo} className='img'/>
+        {/* <img src={logo} className='img'/> */}
         <span onClick={() => {this.handleShowHide()}}>{this.state.show === true ? 'Hide' : 'Show'} list User:</span>
         {this.state.show && 
           <>
@@ -26,9 +26,13 @@ class DisplayInfor extends React.Component {
                 return (
                   <div key={user.id}>
                     <div  className={+user.age > 18 ? "green" : "red"}>
-                      <div>My name's{user.name}</div>
-                      <div>My age's{user.age}</div>
-                      <hr/>
+                      <div>
+                        <div>My name's{user.name}</div>
+                        <div>My age's{user.age}</div>
+                      </div>
+                      <div>
+                        <button onClick={() => {this.props.handleDeleteUser(user.id)}}>Delete</button>
+                      </div>
                     </div>
                   </div>
                 );

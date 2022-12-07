@@ -31,18 +31,21 @@ class MyComponent extends React.Component {
       })
   }
 
-  render() {
-    const  test = {
-      name: "hoi dan IT",
-      age:26
-    };
+  handleDeleteUser = (userId) => {
+    let listUsersClone = this.state.listUsers;
+    listUsersClone = listUsersClone.filter(item => 
+      item.id !== userId
+    );
+    this.setState({
+      listUsers:listUsersClone
+    });
+  }
 
+  render() {
     return (
       <>
-        <AddUserInfor handleAddNewUser={this.handleAddNewUser}/>
-        <br />
-        <br />
-        <DisplayInfor listUsers={this.state.listUsers} />
+        <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
+        <DisplayInfor listUsers={this.state.listUsers} handleDeleteUser={this.handleDeleteUser} />
       </>
     );
   }
