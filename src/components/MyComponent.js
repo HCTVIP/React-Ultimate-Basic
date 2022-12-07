@@ -32,13 +32,18 @@ class MyComponent extends React.Component {
   }
 
   render() {
+    const  test = {
+      name: "hoi dan IT",
+      age:26
+    };
+
     return (
-      <div>
+      <>
         <AddUserInfor handleAddNewUser={this.handleAddNewUser}/>
         <br />
         <br />
         <DisplayInfor listUsers={this.state.listUsers} />
-      </div>
+      </>
     );
   }
 }
