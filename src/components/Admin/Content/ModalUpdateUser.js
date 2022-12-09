@@ -4,11 +4,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { postCreateNewUser } from '../../../services/apiServices';
+import { putUpdateUser } from '../../../services/apiServices';
 import _ from 'lodash';
 
 
 const ModalUpdateUser = (props) => {
+
     const { show, setShow, dataUpdate } = props;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,19 +25,20 @@ const ModalUpdateUser = (props) => {
             setRole (dataUpdate.role);
             setImage ("");
             if (dataUpdate.image) {
-                setPreviewImage (dataUpdate.image);
+                setPreviewImage (`data:image/jpeg;base64,${dataUpdate.image}`);
             }
         }
     },[dataUpdate]);
 
     const handleClose = () => {
-        setEmail ("")
-        setPassword ("")
-        setUsername ("")
-        setRole ("USER")
-        setImage ("")
-        setPreviewImage ("")
-        setShow(false)
+        setEmail ("");
+        setPassword ("");
+        setUsername ("");
+        setRole ("USER");
+        setImage ("");
+        setPreviewImage ("");
+        setShow(false);
+        props.resetUpdateData();
     };
 
     const handleUploadImage = (event) => {
@@ -58,13 +60,8 @@ const ModalUpdateUser = (props) => {
 
     const handleSubmitCreateUser = async() => {
         const isValidateEmail = validateEmail(email);
-        if (!password) {
-        toast.error("invalid Password");
-        return;
-        }
     
-    
-    let data = await postCreateNewUser(email,password,username,role,image)
+    let data = await putUpdateUser(dataUpdate.id, username, role, image)
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
@@ -149,7 +146,7 @@ const ModalUpdateUser = (props) => {
                 </div>
                 <div className="col-md-12 image-preview">
                     {previewImage ? 
-                        <img src={`data:image/jpeg;base64,${previewImage}`}/> 
+                        <img src={previewImage}/> 
                         : 
                         <span>Preview Image</span> 
                     }
