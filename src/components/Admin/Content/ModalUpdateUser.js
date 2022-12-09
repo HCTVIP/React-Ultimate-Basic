@@ -10,7 +10,7 @@ import _ from 'lodash';
 
 const ModalUpdateUser = (props) => {
 
-    const { show, setShow, dataUpdate } = props;
+    const { show, setShow, dataUpdate, currentPage } = props;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
@@ -65,7 +65,9 @@ const ModalUpdateUser = (props) => {
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await props.fetchListUsers();
+    //   await props.fetchListUsers();
+    // props.setCurrentPage(1)
+    await props.fetchListUsersWithPaginate(currentPage)
     }
 
     if (data && data.EC !== 0) {
