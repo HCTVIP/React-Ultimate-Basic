@@ -5,6 +5,8 @@ import { postLogin } from "../../services/apiServices";
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { doLogin } from "../../redux/action/userAction";
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { is } from "immutable";
 
 const Login = (props) => {
 
@@ -12,6 +14,8 @@ const Login = (props) => {
     const [passWord, setPassWord] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
     const validateEmail = (email) => {
         return String(email)
           .toLowerCase()
@@ -31,16 +35,19 @@ const Login = (props) => {
         toast.error("invalid Password");
         return;
         }
+        setIsLoading(true);
         // submit apis
         let data = await postLogin(email, passWord);
         if (data && data.EC === 0) {
             dispatch(doLogin(data));
             toast.success(data.EM);
+            setIsLoading(false);
             navigate("/");
           }
       
           if (data && +data.EC !== 0) {
             toast.error(data.EM);
+            setIsLoading(false);
           }
     };
 
@@ -81,8 +88,10 @@ const Login = (props) => {
                     <button 
                         className="btn-submit"
                         onClick={() => handleLogin()}
+                        disabled={isLoading}
                     >
-                        Login to HoiDanIt
+                        {isLoading === true && <CgSpinnerTwoAlt className="loader-icon"/>}
+                        <span>Login to HoiDanIt</span>
                     </button>
                 </div>
                 <div className="text-center">
