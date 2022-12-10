@@ -46,10 +46,10 @@ const ModalCreateUser = (props) => {
 
     // validate
     const isValidateEmail = validateEmail(email);
-    // if (!isValidateEmail) {
-    //   toast.error("invalid Email");
-    //   return;
-    // }
+    if (!isValidateEmail) {
+      toast.error("invalid Email");
+      return;
+    }
 
     if (!password) {
       toast.error("invalid Password");
