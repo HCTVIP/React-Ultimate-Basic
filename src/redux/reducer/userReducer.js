@@ -25,7 +25,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 },
                 isAuthenticated: true,
             };
-            default: return state;
+        default: return state;
     }
 };
 
