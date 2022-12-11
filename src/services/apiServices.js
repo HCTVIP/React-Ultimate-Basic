@@ -8,7 +8,7 @@ const postCreateNewUser = (email,password,username,role,image) => {
     data.append('username', username);
     data.append('role', role);
     data.append('userImage', image);
-    return axios.post(`api/v1/participant`, data);
+    return axios.post(`/api/v1/participant`, data);
 }
 
 const putUpdateUser = (id,username,role,image) => {
@@ -17,7 +17,7 @@ const putUpdateUser = (id,username,role,image) => {
     data.append('username', username);
     data.append('role', role);
     data.append('userImage', image);
-    return axios.put(`api/v1/participant`, data);
+    return axios.put(`/api/v1/participant`, data);
 }
 
 const deleteUser = (userId) => {
@@ -37,12 +37,16 @@ const postLogin = (useEmail, usePassword) => {
 }
 
 const postRegister = (email, password, username) => {
-    return axios.post(`api/v1/register`, {email, password, username});
+    return axios.post(`/api/v1/register`, {email, password, username});
+}
+
+const getQuizByUser = () => {
+    return axios.get(`/api/v1/quiz-by-participant`);
 }
 
 const getAllUsers = () => {
-    return axios.get(`api/v1/participant/all`);
+    return axios.get(`/api/v1/participant/all`);
 }
 
 
-export { postCreateNewUser, getAllUsers, putUpdateUser, deleteUser, getUserWithPaginate, postLogin, postRegister } ;
+export { postCreateNewUser, getAllUsers, putUpdateUser, deleteUser, getUserWithPaginate, postLogin, postRegister, getQuizByUser } ;
