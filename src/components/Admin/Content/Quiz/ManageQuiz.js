@@ -4,7 +4,8 @@ import Select from 'react-select';
 import { useState } from 'react';
 import { postCreateNewQuiz } from '../../../../services/apiServices';
 import { toast } from 'react-toastify';
-import { ToastHeader } from 'react-bootstrap';
+import TableQuiz from './TableQuiz';
+import Accordion from 'react-bootstrap/Accordion';
 
 const options = [
     { value: 'EASY', label: 'EASY' },
@@ -45,13 +46,11 @@ const ManageQuiz = (prop) => {
 
     return (
         <div className="quiz-container">
-            <div className="title">
-                Manage Quizzes
-            </div>
-            <hr/>
-            <div className="add-new">
-            
-            </div>
+            <Accordion defaultActiveKey="0">
+            <Accordion.Item eventKey="0">
+                <Accordion.Header>Manage Quizzes</Accordion.Header>
+                <Accordion.Body>
+                <div className="add-new">
             <fieldset className="border rounded-3 p-3">
                 <legend className="float-none w-auto px-3">Add new Quiz:</legend>
                 <div className="form-floating mb-3">
@@ -97,9 +96,12 @@ const ManageQuiz = (prop) => {
                     >Save</button>
                 </div>
             </fieldset>
-            
+            </div>
+                </Accordion.Body>
+            </Accordion.Item>
+            </Accordion>
             <div className="list-detail">
-                Table
+                <TableQuiz />
             </div>
         </div>
     )
