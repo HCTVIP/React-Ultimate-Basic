@@ -48,7 +48,6 @@ const DetailQuiz = () => {
                 })
             .value()
             setDataQuiz(data);
-            console.log(data)
         }
     }
 
@@ -61,6 +60,32 @@ const DetailQuiz = () => {
     const handleNext = () => {
         if(dataQuiz && dataQuiz.length > index + 1) 
             setIndex(index + 1);
+    }
+
+    const handleFinish = () => {
+        console.log("data before submit:", dataQuiz)
+        let payload = {
+            quizId: +quizId,
+            answers: [],
+        };
+        let answers = [];
+        if(dataQuiz && dataQuiz.length > 0) {
+            dataQuiz.forEach(question => {
+                let questionId = question.questionId;
+                let userAnswerId = [];
+                question.answers.forEach(answer => {
+                    if(answer.isSelected === true) {
+                        userAnswerId.push(answer.id)
+                    }
+                })
+                answers.push({
+                    questionId: +questionId,
+                    userAnswerId: userAnswerId,
+                })
+            })
+            payload.answers = answers;
+            console.log("final payload", payload)
+        }
     }
 
     const handleCheckBox = (answersId, questionId) => {
@@ -113,7 +138,7 @@ const DetailQuiz = () => {
                     </button>
                     <button 
                         className="btn btn-warning"
-                        onClick={() => handleNext()}
+                        onClick={() => handleFinish()}
                     >Finish
                     </button>
                 </div>
