@@ -60,6 +60,36 @@
         width: 30%;
         border-radius: 5px;
         padding: 20px;
+
+        .main-timer {
+            border-bottom: 1px dashed;
+            padding-bottom: 23px;
+            text-align: center;
+            padding-top: 10px;
+            font-weight: 600;
+            font-size: 20px;
+        }
+        .main-question {
+            display: flex;
+            padding-top: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
+            .question {
+                border: 1px solid #7e7b7b;
+                padding: 10px 10px;
+                border-radius: 50%;
+                height: 40px;
+                width: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+
+                &:hover {
+                    color: red;
+                }
+            }
+        }
     }
 
     
