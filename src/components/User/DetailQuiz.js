@@ -5,7 +5,7 @@ import _ from 'lodash';
 import "./DetailQuiz.scss";
 import Question from './Question';
 import ModalResult from './ModalResult';
-import RightContent from './RightContent/Content';
+import RightContent from './RightContent/RightContent';
 
 
 const DetailQuiz = () => {
@@ -67,7 +67,7 @@ const DetailQuiz = () => {
             setIndex(index + 1);
     }
 
-    const handleFinish = async () => {
+    const handleFinishQuiz = async () => {
         console.log("data before submit:", dataQuiz)
         let payload = {
             quizId: +quizId,
@@ -154,13 +154,16 @@ const DetailQuiz = () => {
                     </button>
                     <button 
                         className="btn btn-warning"
-                        onClick={() => handleFinish()}
+                        onClick={() => handleFinishQuiz()}
                     >Finish
                     </button>
                 </div>
            </div>
            <div className="right-content">
-                <RightContent dataQuiz={dataQuiz}/>
+                <RightContent 
+                    handleFinishQuiz={handleFinishQuiz}
+                    dataQuiz={dataQuiz}
+                />
            </div>
            <ModalResult 
             show={isShowModalResult}
