@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
 import Lightbox from "react-awesome-lightbox";
 import { useEffect } from 'react';
-import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../../services/apiServices";
+import { 
+    getAllQuizForAdmin, getQuizWithQA, postUpsertQA 
+} from "../../../../services/apiServices";
 import { toast } from 'react-toastify';
 
 const QuizQA = (props) => {
@@ -16,6 +18,7 @@ const QuizQA = (props) => {
     const [isPreviewImage, setIsPreviewImage] = useState(false);
     const [listQuiz, setListQuiz] = useState([]);
     const [selectedQuiz, setSelectedQuiz] = useState({});
+    // console.log(selectedQuiz)
     const [dataImagePreview, setDataImagePreview] = useState({
         title: '',
         url: '',
@@ -35,12 +38,44 @@ const QuizQA = (props) => {
            ] 
         },
     ]
-    const [questions, setQuestions] =useState(initQuestion);  
+    const [questions, setQuestions] = useState(initQuestion);  
 
     useEffect(() => {
         fetchQuiz();
     }, [])
     
+    useEffect(() => {
+        if(selectedQuiz && selectedQuiz.value) {
+            fetchQuizWithQA();
+        }
+    },[selectedQuiz])
+
+    // convert base64 to file object
+    function urltoFile(url, filename, mimeType){
+        return (fetch(url)
+            .then(function(res){return res.arrayBuffer();})
+            .then(function(buf){return new File([buf], filename,{type:mimeType});})
+        );
+    }
+
+    const fetchQuizWithQA = async () => {
+        let rs = await getQuizWithQA(selectedQuiz.value)
+        console.log("check rs", rs)
+        if (rs && rs.EC === 0) {
+            let newQA = [];
+            for(let i = 0; i < rs.DT.qa.length; i++) {
+                let q = rs.DT.qa[i];
+                if(!q.imageFile) {
+                    q.imageName = `Question-${q.id}.png`
+                    q.imageFile = await urltoFile(`data:image/png;base64,${q.imageFile}`, `Question-${q.id}.png`,`image/png`)
+                }
+                newQA.push(q)
+            }
+            setQuestions(newQA)
+            console.log("check newQA", newQA)
+        }
+    }
+
     const fetchQuiz = async () => {
         let res = await getAllQuizForAdmin();
         if(res && res.EC === 0) {
@@ -206,22 +241,30 @@ const QuizQA = (props) => {
         // }));
         
         /* Cách 2*/
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(
-                +selectedQuiz.value, 
-                question.description, 
-                question.imageFile);
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion (
-                    answer.description,
-                    answer.isCorrect, 
-                    q.DT.id
-                ) 
+        let questionsClone = _.cloneDeep(questions);
+        for(let i = 0; i < questionsClone.length; i ++) {
+            if(questionsClone[i].imageFile) {
+                questionsClone[i].imageFile = await toBase64(questionsClone[i].imageFile)
             }
         }
-        toast.success("Create questions and answer succeed!")
-        setQuestions(initQuestion);
+
+        let res =  await postUpsertQA({
+            quizId: selectedQuiz.value,
+            questions: questionsClone,
+        });
+
+        if(res & res.EC === 0) {
+            toast.success(res.EM);
+            fetchQuizWithQA();
+        }
     }
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
 
     const handlePreviewImage = (questionId) => {
         let questionsClone = _.cloneDeep(questions);
@@ -241,7 +284,7 @@ const QuizQA = (props) => {
                 <div className="col-6 form-group">
                     <label className="mb-2">Select Quiz :</label>
                     <Select
-                        defaultValue={selectedQuiz}
+                        // defaultValue={selectedQuiz}
                         onChange={setSelectedQuiz}
                         options={listQuiz}
                     />
@@ -310,6 +353,7 @@ const QuizQA = (props) => {
                                                     <input 
                                                         type="text" 
                                                         className="form-control" 
+                                                        value={answer.description}
                                                         placeholder="name@example.com"
                                                         onChange={(event) => handleAnswerQuestion("INPUT", answer.id, question.id, event.target.value)}
 
