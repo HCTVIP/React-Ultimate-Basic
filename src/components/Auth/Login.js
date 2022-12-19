@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { doLogin } from "../../redux/action/userAction";
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
-import { is } from "immutable";
+import Language from "../Header/Language";
 
 const Login = (props) => {
 
@@ -52,7 +52,6 @@ const Login = (props) => {
     };
 
     const handleKeyDown = (event) => {
-        console.log(event.key, event)
         if(event && event.key === "Enter") {
             handleLogin()
         }
@@ -63,6 +62,7 @@ const Login = (props) => {
             <div className="header">
                 <span>Don't have an account yet</span>
                 <button onClick={() => {navigate("/register")}}>Sign Up</button>
+                <Language/>
             </div>
             <div className="title col-4 mx-auto">
                 HoiDanIt 

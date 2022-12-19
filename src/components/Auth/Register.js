@@ -5,6 +5,7 @@ import { postRegister } from "../../services/apiServices";
 import { toast } from 'react-toastify';
 import { VscEyeClosed, VscEye } from 'react-icons/vsc';
 import './Register.scss';
+import Language from "../Header/Language";
 
 const Register = () => {
 
@@ -52,6 +53,7 @@ const Register = () => {
             <div className="header">
                 <span>Already have an account?</span>
                 <button onClick={() => {navigate("/login")}}>Log In</button>
+                <Language />
             </div>
             <div className="title col-4 mx-auto">
                 Hỏi Dân IT &amp; Eric
