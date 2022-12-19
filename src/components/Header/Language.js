@@ -1,6 +1,5 @@
 import { NavDropdown } from 'react-bootstrap';
 import { useTranslation, Trans } from 'react-i18next';
-import i18n from '../../utils/i18n';
 
 
 const Language = (props) => {
@@ -8,7 +7,6 @@ const Language = (props) => {
     const { t, i18n } = useTranslation();
     const handleChangeLanguage = (language) => {
         i18n.changeLanguage(language)
-        console.log(i18n.language)
     }
 
     return (

@@ -1,15 +1,14 @@
 import VideoHomePage from '../../assets/Video/video-1920.mp4'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation, Trans } from 'react-i18next';
-import i18n from '../../utils/i18n';
+import { useTranslation } from 'react-i18next';
 
 
 const HomePage = (props) => {
 
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <div className="homepage-container">

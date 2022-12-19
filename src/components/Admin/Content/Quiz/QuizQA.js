@@ -18,7 +18,6 @@ const QuizQA = (props) => {
     const [isPreviewImage, setIsPreviewImage] = useState(false);
     const [listQuiz, setListQuiz] = useState([]);
     const [selectedQuiz, setSelectedQuiz] = useState({});
-    // console.log(selectedQuiz)
     const [dataImagePreview, setDataImagePreview] = useState({
         title: '',
         url: '',
@@ -60,7 +59,6 @@ const QuizQA = (props) => {
 
     const fetchQuizWithQA = async () => {
         let rs = await getQuizWithQA(selectedQuiz.value)
-        console.log("check rs", rs)
         if (rs && rs.EC === 0) {
             let newQA = [];
             for(let i = 0; i < rs.DT.qa.length; i++) {
@@ -72,7 +70,6 @@ const QuizQA = (props) => {
                 newQA.push(q)
             }
             setQuestions(newQA)
-            console.log("check newQA", newQA)
         }
     }
 
