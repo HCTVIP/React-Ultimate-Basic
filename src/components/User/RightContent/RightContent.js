@@ -32,7 +32,6 @@ const RightContent = (props) => {
                 }
             )
         }
-        props.setIndex(index)
         if(question && question.answers.length > 0) {
             let isUnAnswered = question.answers.some(answer => 
                 answer.isSelected === true

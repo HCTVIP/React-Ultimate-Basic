@@ -68,7 +68,6 @@ const DetailQuiz = () => {
     }
 
     const handleFinishQuiz = async () => {
-        console.log("data before submit:", dataQuiz)
         let payload = {
             quizId: +quizId,
             answers: [],
